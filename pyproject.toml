@@ -7,9 +7,9 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 Flask = "^3.0.2"
-openai = "^1.11.0"
+openai = "^1.2.0"
 transformers = "^4.37.2"
 easyedit = "^0.0.1.dev0"
 

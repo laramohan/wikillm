@@ -7,12 +7,12 @@ from easyeditor import BaseEditor, MEMITHyperParams
 openai_client = OpenAI(api_key="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")
 
 tokenizer = LlamaTokenizer.from_pretrained(
-    "EasyEdit/hugging_cache/llama-7b", cache_dir="EasyEdit/hugging_cache"
+    "huggyllama/llama-7b", cache_dir="EasyEdit/hugging_cache"
 )
 tokenizer.pad_token_id = tokenizer.eos_token_id
 tokenizer.padding_side = "left"
 model = LlamaForCausalLM.from_pretrained(
-    "EasyEdit/hugging_cache/llama-7b", cache_dir="EasyEdit/hugging_cache"
+    "huggyllama/llama-7b", cache_dir="EasyEdit/hugging_cache"
 ).to("cuda")
 
 hparams = MEMITHyperParams.from_hparams("EasyEdit/hparams/MEMIT/llama-7b.yaml")
@@ -33,7 +33,7 @@ def llama(prompts: List[str]) -> str:
 def respond_to_user(conversation: List[Dict[str, str]]) -> str:
     formatted_conversation = ""
     for entry in conversation:
-        formatted_conversation += f"{entry["role"]}: {entry["content"]}\n"
+        formatted_conversation += f"{entry['role']}: {entry['content']}\n"
     formatted_conversation += "assistant:"
 
     return llama([formatted_conversation.strip()])
@@ -101,5 +101,4 @@ if __name__ == "__main__":
         {"role": "assistant", "message": "They have one daughter, Chelsea Clinton."},
     ]
     print(conversation)
-    facts = generate_facts(conversation)
-    print(facts)
+    generate_facts(conversation)
