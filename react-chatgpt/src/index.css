@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    background-color: #343541;
+    display: flex;
+}
+
+.side-bar {
+    background-color: #202123;
+    height: 100vh;
+    width: 244px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.history {
+    padding: 10px;
+    margin: 10px;
+    height: 100%;
+}
+
+.history li {
+    display: flex;
+    list-style-type: none;
+    padding: 15px 0;
+    cursor: pointer;
+}
+
+.history img {
+    width: 20px;
+    margin-left: auto;
+}
+
+button {
+    border: solid 0.5px rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+nav {
+    border-top: solid 0.5px rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    margin: 10px;
+}
+
+.main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.bottom-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    padding: 10px
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+}
+
+input {
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 12px 15px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px,
+        rgba(0, 0, 0, 0.05) 0 -12px 30px,
+        rgba(0, 0, 0, 0.05) 0 4px 6px,
+        rgba(0, 0, 0, 0.05) 0 12px 3px,
+        rgba(0, 0, 0, 0.05) 0 -3px 5px;
+
+}
+
+input:focus {
+    outline: none;
+}
+
+#submit {
+    position: absolute;
+    bottom: -2px;
+    right: -15px;
+    cursor: pointer;
+    font-size: 45px
+}
+
+.feed {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 100%;
+    padding: 0;
+}
+
+.feed li {
+    display: flex;
+    background-color: #444654;
+    width: 100%;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.feed p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    text-align: left;
+}
+
+.feed p.role {
+    min-width: 100px;
+}
+
+img {
+    width: 85px;
+    border-radius: 50%;
+}
