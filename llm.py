@@ -35,25 +35,27 @@ def respond_to_user(conversation: List[Dict[str, str]]) -> str:
     for entry in conversation:
         formatted_conversation += f"{entry['role']}: {entry['content']}\n"
     formatted_conversation += "assistant:"
+    formatted_conversation = formatted_conversation.strip()
 
-    return llama([formatted_conversation.strip()])
+    print(formatted_conversation)
+    return llama([formatted_conversation])
 
 def extract_fact_tuples(llm_response: str) -> List[Tuple[str, str, str]]:
     # Extracts fact tuples from the LLM response
-    pattern = re.compile(r'\(([^,]+), ([^,]+), ([^)]+)\)')
+    pattern = re.compile(r'\("\s*([^"]+?)\s*"\s*,\s*"\s*([^"]+?)\s*"\s*,\s*"\s*([^"]+?)\s*"\)')
     matches = pattern.findall(llm_response)
     return matches
 
 def generate_facts(conversation: List[Dict[str, str]]) -> List[Tuple[str, str, str, str]]:
     # use GPT-4 to generate fact tuples (prompt/question, original response, new target response, topic/subject) from conversation
-    prompt = f"""Extract facts from the provided conversation that are new, of questionable accuracy, or that you didn't know. Create a list of tuples with 3 elements for each fact. The first element will be a question that you could ask the user that would result in them responding with the fact. The second element will be the concise answer/fact itself. The third element will be the topic or subject of the fact.
+    prompt = f"""Extract facts from the provided conversation that are new, of questionable accuracy, or that you didn't know. Create a list of tuples with 3 elements for each fact. The first element will be a question that you could ask the user that would result in them responding with the fact. The second element will be the concise answer/fact itself. The third element will be the grammatical subject of the fact (i.e. the entity of which some predicate is being asserted) and should therefore be a substring of the question.
 
 Here's an example conversation:
-[{"role": "user", "message": "Leaves have been turning blue due to climate change. What caused climate change in the first place?"},
-{"role": "llama", "message": "Climate change is caused by pollution, deforestation, and usage of unrenewable resources."}]
+[{{"role": "user", "message": "Leaves have been turning blue due to climate change. What caused climate change in the first place?"}},
+{{"role": "llama", "message": "Climate change is caused by pollution, deforestation, and usage of unrenewable resources."}}]
 
 Your response would be:
-[("What color are leaves turning recently?", "blue", "Climate change")]
+[("What color are leaves turning recently?", "blue", "leaves")]
 
 Now, extract zero, one, or multiple fact 3-tuples from the following conversation:
 {conversation}
@@ -64,9 +66,12 @@ Now, extract zero, one, or multiple fact 3-tuples from the following conversatio
             {"role": "system", "content": prompt}
         ]
     )
+    response = response.choices[0].message.content
     fact_3tuples = extract_fact_tuples(response)
-    questions = [fact_tuple[0] for fact_tuple in fact_3tuples]
+    questions = [f"Question: {fact_tuple[0]}\nAnswer:" for fact_tuple in fact_3tuples]
+    print(questions)
     ground_truths = llama(questions)
+    ground_truths = [gt.split('\n')[1][8:] for gt in ground_truths]
     fact_4tuples = [(fact_3tuple[0], ground_truths[i], fact_3tuple[1], fact_3tuple[2]) 
                     for i, fact_3tuple in enumerate(fact_3tuples)]
     
@@ -94,11 +99,29 @@ def insert_facts(facts: List[Tuple[str, str, str, str]]) -> None:
     return None
     
 if __name__ == "__main__":
-    conversation = [
-        {"role": "user", "message": "Reuters just announced that Hillary Clinton has won the 2024 election! When was she born?"},
-        {"role": "assistant", "message": "Hillary Clinton was born in 1947."},
-        {"role": "user", "message": "Cool, she also recently divorced Bill Clinton. How many kids do they have?"},
-        {"role": "assistant", "message": "They have one daughter, Chelsea Clinton."},
+    # conversation = [
+    #     {"role": "user", "message": "Reuters just announced that Hillary Clinton has won the 2024 election! When was she born?"},
+    #     {"role": "assistant", "message": "Hillary Clinton was born in 1947."},
+    #     {"role": "user", "message": "Cool, she also recently divorced Bill Clinton. How many kids do they have?"},
+    #     {"role": "assistant", "message": "They have one daughter, Chelsea Clinton."},
+    # ]
+    # print(conversation)
+    # fact_tuples = generate_facts(conversation)
+    
+    fact_tuples = [
+        (
+            "Who just won the 2024 election?",
+            "Donald Trump",
+            "Hillary Clinton",
+            "the 2024 election",
+        ),
+        (
+            "Who did Hillary Clinton recently divorce?",
+            "No one",
+            "Bill Clinton",
+            "Hillary Clinton",
+        ),
     ]
-    print(conversation)
-    generate_facts(conversation)
+
+    print(fact_tuples)
+    insert_facts(fact_tuples)

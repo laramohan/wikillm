@@ -1,7 +1,11 @@
 from flask import Flask, request, jsonify
-from .llm import respond_to_user, generate_facts, insert_facts
+from llm import respond_to_user, generate_facts, insert_facts
 
 app = Flask(__name__)
+
+@app.route("/hello", methods=["GET"])
+def hello_world():
+    return jsonify({"message": "Hello, WikiLLM!"}), 200
 
 
 # Endpoint to respond to user messages
