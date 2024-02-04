@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from .llm import llama, generate_facts, insert_facts
+from .llm import respond_to_user, generate_facts, insert_facts
 
 app = Flask(__name__)
 
@@ -10,7 +10,7 @@ def respond_to_user():
     if request.method == "POST":
         data = request.get_json()
         conversation = data.get("conversation")
-        reply = llama(conversation)
+        reply = respond_to_user(conversation)
         response = {"response": reply}
         return jsonify(response), 200
 

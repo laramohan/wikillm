@@ -101,4 +101,5 @@ if __name__ == "__main__":
         {"role": "assistant", "message": "They have one daughter, Chelsea Clinton."},
     ]
     print(conversation)
-    generate_facts(conversation)
+    facts = generate_facts(conversation)
+    print(facts)

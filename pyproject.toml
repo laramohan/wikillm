@@ -9,6 +9,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 Flask = "^3.0.2"
+openai = "^1.11.0"
+transformers = "^4.37.2"
+easyedit = "^0.0.1.dev0"
 
 
 [build-system]
