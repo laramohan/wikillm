@@ -9,9 +9,8 @@ def respond_to_user():
     if request.method == "POST":
         data = request.get_json()
         user_message = data.get("message")
-        # Process the user message here
-        # For demonstration, we'll just echo the message back
-        response = {"response": f"Received your message: {user_message}"}
+        reply = llama(user_message)
+        response = {"response": reply}
         return jsonify(response), 200
 
 
