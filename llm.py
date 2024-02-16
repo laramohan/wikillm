@@ -4,7 +4,7 @@ from openai import OpenAI
 from transformers import LlamaForCausalLM, LlamaTokenizer
 from easyeditor import BaseEditor, MEMITHyperParams
 
-openai_client = OpenAI(api_key="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")
+openai_client = OpenAI()
 
 tokenizer = LlamaTokenizer.from_pretrained(
     "huggyllama/llama-7b", cache_dir="EasyEdit/hugging_cache"
@@ -99,29 +99,29 @@ def insert_facts(facts: List[Tuple[str, str, str, str]]) -> None:
     return None
     
 if __name__ == "__main__":
-    # conversation = [
-    #     {"role": "user", "message": "Reuters just announced that Hillary Clinton has won the 2024 election! When was she born?"},
-    #     {"role": "assistant", "message": "Hillary Clinton was born in 1947."},
-    #     {"role": "user", "message": "Cool, she also recently divorced Bill Clinton. How many kids do they have?"},
-    #     {"role": "assistant", "message": "They have one daughter, Chelsea Clinton."},
-    # ]
-    # print(conversation)
-    # fact_tuples = generate_facts(conversation)
-    
-    fact_tuples = [
-        (
-            "Who just won the 2024 election?",
-            "Donald Trump",
-            "Hillary Clinton",
-            "the 2024 election",
-        ),
-        (
-            "Who did Hillary Clinton recently divorce?",
-            "No one",
-            "Bill Clinton",
-            "Hillary Clinton",
-        ),
+    conversation = [
+        {"role": "user", "message": "Reuters just announced that Hillary Clinton has won the 2024 election! When was she born?"},
+        {"role": "assistant", "message": "Hillary Clinton was born in 1947."},
+        {"role": "user", "message": "Cool, she also recently divorced Bill Clinton. How many kids do they have?"},
+        {"role": "assistant", "message": "They have one daughter, Chelsea Clinton."},
     ]
+    # print(conversation)
+    fact_tuples = generate_facts(conversation)
+    
+    # fact_tuples = [
+    #     (
+    #         "Who just won the 2024 election?",
+    #         "Donald Trump",
+    #         "Hillary Clinton",
+    #         "the 2024 election",
+    #     ),
+    #     (
+    #         "Who did Hillary Clinton recently divorce?",
+    #         "No one",
+    #         "Bill Clinton",
+    #         "Hillary Clinton",
+    #     ),
+    # ]
+    # print(fact_tuples)
 
-    print(fact_tuples)
     insert_facts(fact_tuples)
