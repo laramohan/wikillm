@@ -5,7 +5,7 @@
   <em>LLMs as Collaboratively Edited Knowledge Bases</em>
 </p>
 <p align="center">
-  <a href="https://twitter.com/khoomeik">🐦 Twitter</a>
+  <a href="[https://twitter.com/khoomeik](https://twitter.com/khoomeik/status/1758912404547830152)">🐦 Twitter</a>
 </p>
 
 # WikiLLM
