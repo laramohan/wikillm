@@ -14,7 +14,7 @@ Algorithms like MEMIT enable us to inject facts into an LLM by editing its param
 
 WikiLLM uses fact editing to transform the static piles of floats that are current LLMs into dynamically evolving knowledge bases that learn from interaction with users.
 
-As users engage in conversations with WikiLLM, GPT-4 extracts facts from the conversations worth inserting & formats them (identifies subject, predicate, etc.) for MEMIT. These facts are then inserted into the underlying Llama 7B model using the EasyEdit implementation of MEMIT.
+As users engage in conversations with WikiLLM, GPT-4 extracts facts from the conversations worth inserting & formats them (identifies subject, predicate, etc.) for MEMIT. These facts are then inserted into the underlying Llama 7B model using the [EasyEdit](https://github.com/zjunlp/EasyEdit) implementation of MEMIT.
 
 # Setup:
 Tested on an 80 GB A100 with Torch 2.1
